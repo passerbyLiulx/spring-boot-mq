@@ -1,4 +1,4 @@
-package com.example.mq.msg;
+package com.example.mq.receiver;
 
 import com.example.mq.config.RabbitConfig;
 import org.slf4j.Logger;
@@ -8,13 +8,19 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 @Component
-@RabbitListener(queues = RabbitConfig.QUEUE_A)
-public class MsgReceiver {
+public class TopicReceiver {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @RabbitHandler
-    public void process(String content) {
+    @RabbitListener(queues = RabbitConfig.TOPIC_QUEUE_A)
+    public void processA(String content) {
         logger.info("接收处理队列A当中的消息： " + content);
+    }
+
+    @RabbitHandler
+    @RabbitListener(queues = RabbitConfig.TOPIC_QUEUE_B)
+    public void processB(String content) {
+        logger.info("接收处理队列B当中的消息： " + content);
     }
 }

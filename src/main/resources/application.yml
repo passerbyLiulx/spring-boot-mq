@@ -1,0 +1,27 @@
+spring:
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: rabbitmquser
+    password: 123456
+    # 确认消息已发送到交换机
+    publisher-confirm-type: correlated
+    # 确认消息已发送到队列
+    publisher-returns: true
+    # 监听相关配置
+    listener:
+      type: simple
+      simple:
+        # 重试策略相关配置
+        retry:
+          # 是否支持重试
+          enabled: true
+          # 重试间隔时间 单位毫秒
+          initial-interval: 3000ms
+          # 重试次数
+          max-attempts: 3
+          # 重试最大间隔时间 单位毫秒
+          max-interval: 15000ms
+          # 重试间隔时间乘积
+          multiplier: 2
+
